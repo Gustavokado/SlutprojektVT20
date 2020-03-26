@@ -4,35 +4,37 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    protected Vector3 input;
+    protected Vector2 input;
+    protected Vector3 aim;
     public float speed;
-    public float currentRotation = 0f;
-    public float newRotation = 0f;
-    /*Vector3 currentEulerAngles;
-    Quaternion currentRotation;*/
-
+    float currentDirection;
+    float newDirection;
+  
     void Start()
     {
         
     }
     
     
-    protected void Move(Vector3 movement)
+    protected void Move(Vector2 movement)
     {
-        transform.Translate(movement*Time.deltaTime * speed);
-        newRotation = Mathf.Asin(movement.x / movement.y)*Mathf.Rad2Deg - currentRotation;
-        transform.Rotate(0f, 0f, newRotation, Space.World);
-        currentRotation = newRotation;
+        transform.Translate(movement*Time.deltaTime * speed,Space.World);
+        
         /*currentEulerAngles = new Vector3(0, 0, Mathf.Sin(movement.x / movement.y) * Mathf.Rad2Deg);
         currentRotation.eulerAngles = currentEulerAngles;
         transform.rotation = currentRotation;*/
     }
 
-    void Rotate(float angle)
-    {
-        /*currentEulerAngles += new Vector3(0, 0, Mathf.Asin(input.x / input.y) * Mathf.Rad2Deg);
-        currentRotation.eulerAngles = currentEulerAngles;
-        transform.rotation = currentRotation;*/
-    }
+    protected void Rotate(Vector2 target)
+    {       
+        newDirection = -Mathf.Atan(-(target.x-transform.position.x)/-(target.y-transform.position.y))*Mathf.Rad2Deg;
+        if (target.y < transform.position.y)
+        {
+            newDirection += 180;            
+        }
+        
+        transform.Rotate(0,0, newDirection - currentDirection, Space.World);
+        currentDirection = newDirection;
 
+    }
 }
