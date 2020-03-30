@@ -7,42 +7,63 @@ public class PlayerController : Character
     [SerializeField]
     private GameObject crossHair;
     private float crossHairSpeed = 30;
+    Vector3 newCrossHairPosition;
     public GameObject projectilePrefab;
+    private Vector3 aim;
+    bool mouseControl=false;
     void Update()
     {
-        input.x = Input.GetAxis("LeftStickHorizontal");
-        input.y = Input.GetAxis("LeftStickVertical")*-1;
-
-        print(input.x);
-        print(input.y);
+        input.x = Input.GetAxis("Horizontal");
+        input.y = Input.GetAxis("Vertical");
 
         aim.x = Input.GetAxis("RightStickHorizontal");
         aim.y = Input.GetAxis("RightStickVertical")*-1;
 
-
+        if (Input.GetKeyDown("tab"))
+        {
+            if (mouseControl)
+            {
+                mouseControl = false;
+            }
+            else
+            {
+                mouseControl = true;
+            }
+        }
 
         Move(input);
-        crossHair.transform.Translate(input * Time.deltaTime * speed);
-
-        Vector3 newCrossHairPosition = crossHair.transform.position + aim * Time.deltaTime * crossHairSpeed;        
-        Vector3 screenPoint = Camera.main.WorldToViewportPoint(newCrossHairPosition);
-
-        if (screenPoint.x < 0 || screenPoint.x > 1 )
+        if (!mouseControl)
         {
-            newCrossHairPosition.x = crossHair.transform.position.x;
-        }
-        if (screenPoint.y < 0 || screenPoint.y > 1)
-        {
-            newCrossHairPosition.y = crossHair.transform.position.y;
-        }
+            crossHair.transform.Translate(input * Time.deltaTime * speed);
 
-        crossHair.transform.position=newCrossHairPosition;
+            newCrossHairPosition = crossHair.transform.position + aim * Time.deltaTime * crossHairSpeed;
+            Vector3 screenPoint = Camera.main.WorldToViewportPoint(newCrossHairPosition);
+
+            if (screenPoint.x < 0 || screenPoint.x > 1)
+            {
+                newCrossHairPosition.x = crossHair.transform.position.x;
+            }
+            if (screenPoint.y < 0 || screenPoint.y > 1)
+            {
+                newCrossHairPosition.y = crossHair.transform.position.y;
+            }
+            
+        }
+        else
+        {
+            newCrossHairPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            newCrossHairPosition.z = 0;
+            
+        }
+        crossHair.transform.position = newCrossHairPosition;
+
 
         Rotate(crossHair.transform.position);
 
-        if (Input.GetButtonDown("RightBumper"))
+        if (Input.GetButtonDown("RightBumper")|| Input.GetButtonDown("Fire1"))
         {
-            Instantiate(projectilePrefab, transform.position, transform.rotation);
+            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
     }
 }

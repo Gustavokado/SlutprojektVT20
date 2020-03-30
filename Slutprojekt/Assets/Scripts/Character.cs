@@ -5,24 +5,22 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     protected Vector2 input;
-    protected Vector3 aim;
+    
     public float speed;
     float currentDirection;
     float newDirection;
+    Rigidbody2D rb;
   
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
     
     
     protected void Move(Vector2 movement)
     {
-        transform.Translate(movement*Time.deltaTime * speed,Space.World);
-        
-        /*currentEulerAngles = new Vector3(0, 0, Mathf.Sin(movement.x / movement.y) * Mathf.Rad2Deg);
-        currentRotation.eulerAngles = currentEulerAngles;
-        transform.rotation = currentRotation;*/
+        //transform.Translate(movement*Time.deltaTime * speed,Space.World);   
+        rb.velocity = movement * speed;
     }
 
     protected void Rotate(Vector2 target)
@@ -33,7 +31,7 @@ public class Character : MonoBehaviour
             newDirection += 180;            
         }
         
-        transform.Rotate(0,0, newDirection - currentDirection, Space.World);
+        transform.Rotate(0,0, newDirection - currentDirection, Space.Self);
         currentDirection = newDirection;
 
     }

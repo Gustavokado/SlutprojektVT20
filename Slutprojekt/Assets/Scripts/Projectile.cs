@@ -7,26 +7,36 @@ public class Projectile : MonoBehaviour
     public float speed;
     public float direction;
     public float maxLifetime;
-    float lifeTime =0;
-    // Start is called before the first frame update
-    void Start()
+    protected float lifeTime =0;
+    bool friendly;
+    Rigidbody2D rb;
+
+    void Awake()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
+        direction = transform.eulerAngles.z+90;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected void ReduceLifetime()
     {
         lifeTime += Time.deltaTime;
-        if (lifeTime>=maxLifetime)
+        if (lifeTime >= maxLifetime)
         {
             Destroy(this.gameObject);
         }
-        Move();
+    }
+  
+    protected virtual void Move()
+    {     
+        rb.velocity = new Vector2(Mathf.Cos(direction * Mathf.Deg2Rad), Mathf.Sin(direction * Mathf.Deg2Rad)) * speed;           
     }
 
-    protected virtual void Move()
-    {
-        transform.Translate(Vector3.up * speed * Time.deltaTime);
+    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    {        
+        Destroy(gameObject);
+        if (friendly)
+        {
+            //gör damage om träffar enemy
+        }
     }
 }
