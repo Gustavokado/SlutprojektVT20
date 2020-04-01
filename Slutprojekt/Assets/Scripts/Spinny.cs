@@ -27,8 +27,7 @@ public class Spinny : Projectile
             {
                 maxLifeTimeDecay -= .5f;
             }
-            print(lifeTime);
-            print(maxLifetime);
+           
             Vector2 normal = collision.GetContact(0).normal;
             float normalAngle = Vector2.SignedAngle(Vector2.up, normal);
             if (normal.x<0)

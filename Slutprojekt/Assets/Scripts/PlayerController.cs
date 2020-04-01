@@ -10,11 +10,12 @@ public class PlayerController : Character
     Vector3 newCrossHairPosition;
     public GameObject projectilePrefab;
     private Vector3 aim;
-    bool mouseControl=false;
+    bool mouseControl=true;
     void Update()
     {
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
+        //print(input.x); print(input.y);
 
         aim.x = Input.GetAxis("RightStickHorizontal");
         aim.y = Input.GetAxis("RightStickVertical")*-1;

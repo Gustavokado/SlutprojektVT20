@@ -98,7 +98,7 @@ MonoBehaviour:
   speed: 30
   direction: 0
   maxLifetime: 3
-  maxLifeTimeDecay: 3
+  maxLifeTimeDecay: 1
 --- !u!50 &-2946579841635052069
 Rigidbody2D:
   serializedVersion: 4

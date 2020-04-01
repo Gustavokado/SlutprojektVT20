@@ -98,7 +98,6 @@ MonoBehaviour:
   speed: 1
   direction: 0
   maxLifetime: 0.65
-  rb: {fileID: -6502610631774804403}
   explosionPrefab: {fileID: 4928498680252691662, guid: 02a63da4993bf934cbdfd567488f95eb,
     type: 3}
 --- !u!50 &-6502610631774804403
