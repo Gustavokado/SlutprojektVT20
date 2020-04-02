@@ -23,6 +23,11 @@ public class Character : MonoBehaviour
         rb.velocity = movement * speed;
     }
 
+    protected void StopMovement()
+    {
+        rb.velocity = Vector2.zero;
+    }
+
     protected void Rotate(Vector2 target)
     {       
         newDirection = -Mathf.Atan(-(target.x-transform.position.x)/-(target.y-transform.position.y))*Mathf.Rad2Deg;
