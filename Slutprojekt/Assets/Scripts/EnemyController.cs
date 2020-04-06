@@ -9,6 +9,7 @@ public class EnemyController : Character
     protected float distanceToPlayer;
     protected float timeSinceLastFire;
     public float timeBetweenFires;
+    protected bool followPlayer = true;
     private void Awake()
     {
         player = GameObject.Find("Player");
@@ -52,5 +53,14 @@ public class EnemyController : Character
 
         input.x = x / (Mathf.Abs(x) + Mathf.Abs(y));
         input.y = y / (Mathf.Abs(x) + Mathf.Abs(y));
+    }
+
+    protected void RotateInput()
+    {
+        float x = input.x;
+        float y = input.y;
+        
+        input.x = y;
+        input.y = x * -1;
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2160384809168564514}
   m_Layer: 0
   m_Name: Spinny
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,7 @@ MonoBehaviour:
   speed: 30
   direction: 0
   maxLifetime: 3
+  damage: 1
   maxLifeTimeDecay: 1
 --- !u!50 &-2946579841635052069
 Rigidbody2D:

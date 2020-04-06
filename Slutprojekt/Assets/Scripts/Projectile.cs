@@ -8,7 +8,8 @@ public class Projectile : MonoBehaviour
     public float direction;
     public float maxLifetime;
     protected float lifeTime =0;
-    bool friendly;
+    [SerializeField]
+    protected float damage;
     Rigidbody2D rb;
 
     void Awake()
@@ -17,7 +18,7 @@ public class Projectile : MonoBehaviour
         direction = transform.eulerAngles.z+90;
     }
 
-    protected void ReduceLifetime()
+    protected virtual void ReduceLifetime()
     {
         lifeTime += Time.deltaTime;
         if (lifeTime >= maxLifetime)
@@ -32,11 +33,18 @@ public class Projectile : MonoBehaviour
     }
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
-    {        
-        Destroy(gameObject);
-        if (friendly)
+    {
+        if (collision.gameObject.tag == "Projectile")
         {
-            //gör damage om träffar enemy
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
         }
+
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        Character hitCharacter = collision.gameObject.GetComponent<Character>();
+        hitCharacter.ReduceHealth(damage);
     }
 }

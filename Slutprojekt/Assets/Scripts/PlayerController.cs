@@ -13,6 +13,7 @@ public class PlayerController : Character
     bool mouseControl=true;
     void Update()
     {
+        print(health);
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
         //print(input.x); print(input.y);

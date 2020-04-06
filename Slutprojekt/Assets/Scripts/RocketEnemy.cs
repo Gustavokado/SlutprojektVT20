@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RocketEnemy : EnemyController
 {
-    bool followPlayer = true;
+    
     void Update()
     {
         CalculateInputTowardsPlayer();
@@ -31,34 +31,5 @@ public class RocketEnemy : EnemyController
             timeSinceLastFire = 0;
         }
         timeSinceLastFire += Time.deltaTime;
-    }
-
-    void RotateInput()
-    {
-        float x = input.x;
-        float y = input.y;
-        /*if (x>0 && y>0)
-        {            
-            input.x = y;
-            input.y = -x;
-        }
-        else if (x>0 && y<0)
-        {           
-            input.x = y;
-            input.y = -x;
-        }
-        else if (x < 0 && y < 0)
-        {
-            input.x = y;
-            input.y = -x;
-        }
-        else if (x < 0 && y > 0)
-        {
-            input.x = y;
-            input.y = -x;
-        }*/
-        input.x = y;
-        input.y = x * -1;
-       
-    }
+    }    
 }

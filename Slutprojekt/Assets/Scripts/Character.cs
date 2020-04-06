@@ -10,13 +10,18 @@ public class Character : MonoBehaviour
     float currentDirection;
     float newDirection;
     Rigidbody2D rb;
+    [SerializeField]
+    protected float health;
+    [SerializeField]
+    HealthBar healthBar;
   
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        healthBar = Instantiate(healthBar, transform.position, transform.rotation );
+        healthBar.host = this;
     }
-    
-    
+       
     protected void Move(Vector2 movement)
     {
         //transform.Translate(movement*Time.deltaTime * speed,Space.World);   
@@ -38,6 +43,19 @@ public class Character : MonoBehaviour
         
         transform.Rotate(0,0, newDirection - currentDirection, Space.Self);
         currentDirection = newDirection;
+    }
 
+    public void ReduceHealth(float damage)
+    {
+        health -= damage;
+        if (health<=0)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 }

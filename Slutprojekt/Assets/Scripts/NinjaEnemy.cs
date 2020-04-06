@@ -4,15 +4,33 @@ using UnityEngine;
 
 public class NinjaEnemy : EnemyController
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    [SerializeField]
+    float fireAngle;
     void Update()
     {
-        
+        CalculateInputTowardsPlayer();
+        if (distanceToPlayer <= 10 && followPlayer)
+        {
+            followPlayer = false;
+        }
+        if (!followPlayer && distanceToPlayer > 15)
+        {
+            followPlayer = true;
+        }
+        if (!followPlayer)
+        {
+            RotateInput();
+        }
+        Move(input);
+
+        Rotate(player.transform.position);
+
+        if (timeSinceLastFire > timeBetweenFires)
+        {
+            Fire(fireAngle);
+            Fire(-fireAngle);
+            timeSinceLastFire = 0;
+        }
+        timeSinceLastFire += Time.deltaTime;
     }
 }

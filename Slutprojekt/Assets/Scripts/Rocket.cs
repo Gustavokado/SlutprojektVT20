@@ -18,13 +18,29 @@ public class Rocket : Projectile
 
     protected override void Move()
     {
-        speed*=1.05f;
+        speed*=1.1f;
         base.Move();
+    }
+
+    protected override void ReduceLifetime()
+    {
+        base.ReduceLifetime();
+        if (lifeTime >= maxLifetime)
+        {
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
+        }
+        
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-        Instantiate(explosionPrefab, transform.position, transform.rotation);
+       
+
+        if (collision.gameObject.tag != "Projectile")
+        {
+            Instantiate(explosionPrefab, transform.position, transform.rotation);             
+        }
+       
         base.OnCollisionEnter2D(collision);
     }
 }
