@@ -8,15 +8,13 @@ public class PlayerController : Character
     private GameObject crossHair;
     private float crossHairSpeed = 30;
     Vector3 newCrossHairPosition;
-    public GameObject projectilePrefab;
+   
     private Vector3 aim;
     bool mouseControl=true;
     void Update()
-    {
-        print(health);
+    {       
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
-        //print(input.x); print(input.y);
 
         aim.x = Input.GetAxis("RightStickHorizontal");
         aim.y = Input.GetAxis("RightStickVertical")*-1;
@@ -64,7 +62,7 @@ public class PlayerController : Character
 
         if (Input.GetButtonDown("RightBumper")|| Input.GetButtonDown("Fire1"))
         {
-            GameObject projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Projectile projectile = Instantiate(projectilePrefab, transform.position, transform.rotation);
             Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NinjaEnemy : EnemyController
+public class NinjaEnemy : Enemy
 {
     [SerializeField]
     float fireAngle;

@@ -2,30 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spinny : Projectile
+public class Beyblade : Projectile
 {
     [SerializeField]
-    float maxLifeTimeDecay;
-    void Start()
-    {
-        
-    }
+    int maxLifeTimeIncreaseTimes;
     
     void Update()
     {
-        ReduceLifetime();
+        IncreaseLifetime();       
         Move();
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag=="Terrain")
-        {
-            
-            maxLifetime += maxLifeTimeDecay;
-            if (maxLifeTimeDecay>0)
+        {                       
+            if (maxLifeTimeIncreaseTimes>0)
             {
-                maxLifeTimeDecay -= .5f;
+                maxLifetime += .5f;
+                maxLifeTimeIncreaseTimes -= 1;
             }
            
             Vector2 normal = collision.GetContact(0).normal;

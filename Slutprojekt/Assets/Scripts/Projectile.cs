@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed;
-    public float direction;
-    public float maxLifetime;
+    [SerializeField]
+    protected float speed;
+    protected float direction;
+    [SerializeField]
+    protected float maxLifetime;
     protected float lifeTime =0;
     [SerializeField]
     protected float damage;
@@ -18,7 +20,7 @@ public class Projectile : MonoBehaviour
         direction = transform.eulerAngles.z+90;
     }
 
-    protected virtual void ReduceLifetime()
+    protected virtual void IncreaseLifetime()
     {
         lifeTime += Time.deltaTime;
         if (lifeTime >= maxLifetime)
@@ -45,6 +47,9 @@ public class Projectile : MonoBehaviour
         }
 
         Character hitCharacter = collision.gameObject.GetComponent<Character>();
-        hitCharacter.ReduceHealth(damage);
+        if (hitCharacter!=null)
+        {
+            hitCharacter.ReduceHealth(damage);
+        }       
     }
 }

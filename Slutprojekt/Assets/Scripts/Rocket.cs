@@ -6,13 +6,10 @@ public class Rocket : Projectile
 {
     [SerializeField]
     GameObject explosionPrefab;
-    private void Start()
-    {
-       
-    }
+  
     private void Update()
     {
-        ReduceLifetime();
+        IncreaseLifetime();
         Move();
     }
 
@@ -22,25 +19,21 @@ public class Rocket : Projectile
         base.Move();
     }
 
-    protected override void ReduceLifetime()
+    protected override void IncreaseLifetime()
     {
-        base.ReduceLifetime();
+        base.IncreaseLifetime();
         if (lifeTime >= maxLifetime)
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
-        }
-        
+        }        
     }
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-       
-
         if (collision.gameObject.tag != "Projectile")
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);             
-        }
-       
+        }       
         base.OnCollisionEnter2D(collision);
     }
 }

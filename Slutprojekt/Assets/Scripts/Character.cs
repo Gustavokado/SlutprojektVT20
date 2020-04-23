@@ -4,38 +4,35 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    protected Vector2 input;
-    
-    public float speed;
-    float currentDirection;
-    float newDirection;
-    Rigidbody2D rb;
+    //mycket av variablerna och metoderna är protected då subklasserna använder mycket av samma saker
+    protected Vector2 input; 
     [SerializeField]
-    protected float health;
+    protected float speed;
+    private float currentDirection;
+    private float newDirection;
+    private Rigidbody2D rb;
+    [SerializeField]
+    private float health;
     [SerializeField]
     HealthBar healthBar;
-  
-    void Start()
+    [SerializeField]
+    protected Projectile projectilePrefab;
+
+    protected virtual void Start() //defenierar en del saker som behövs som rigidbody och healthbar
     {
         rb = GetComponent<Rigidbody2D>();
-        healthBar = Instantiate(healthBar, transform.position, transform.rotation );
-        healthBar.host = this;
+        healthBar = Instantiate(healthBar, transform.position, transform.rotation);
+        healthBar.SetHost(this);
     }
        
-    protected void Move(Vector2 movement)
-    {
-        //transform.Translate(movement*Time.deltaTime * speed,Space.World);   
+    protected void Move(Vector2 movement) //kallas från subklassernas update
+    {       
         rb.velocity = movement * speed;
     }
 
-    protected void StopMovement()
-    {
-        rb.velocity = Vector2.zero;
-    }
-
-    protected void Rotate(Vector2 target)
+    protected void Rotate(Vector2 target) //roterar karaktären mot en viss punkt (crosshairen/spelaren)
     {       
-        newDirection = -Mathf.Atan(-(target.x-transform.position.x)/-(target.y-transform.position.y))*Mathf.Rad2Deg;
+        newDirection = -Mathf.Atan(-(target.x-transform.position.x)/-(target.y-transform.position.y))*Mathf.Rad2Deg; //fancy matte som jag hittade/testade mig fram
         if (target.y < transform.position.y)
         {
             newDirection += 180;            
@@ -45,12 +42,13 @@ public class Character : MonoBehaviour
         currentDirection = newDirection;
     }
 
-    public void ReduceHealth(float damage)
+    public void ReduceHealth(float damage) //kallas när någon projectile träffar en karaktär och tar in dess damage variabel
     {
         health -= damage;
         if (health<=0)
         {
-            Destroy(this.gameObject);
+            Destroy(healthBar.gameObject);
+            Destroy(this.gameObject);           
         }
     }
 

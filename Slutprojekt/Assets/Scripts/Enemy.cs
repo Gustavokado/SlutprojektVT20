@@ -1,21 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class EnemyController : Character
-{
-    public GameObject projectilePrefab;
+public class Enemy : Character
+{    
+    string enemyName;
     protected GameObject player;
     protected float distanceToPlayer;
     protected float timeSinceLastFire;
-    public float timeBetweenFires;
-    protected bool followPlayer = true;
-    private void Awake()
+    [SerializeField]
+    protected float timeBetweenFires;
+    protected bool followPlayer = true;   
+    EnemyManager manager;
+    EnemyManager.EnemyType type;
+    [SerializeField]
+    Text namePrefab;
+    Text nameTag;
+    Canvas canvas;
+    protected override void Start()
     {
+        base.Start();
         player = GameObject.Find("Player");
+        manager = GameObject.Find("EnemyManager").GetComponent<EnemyManager>();
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+        nameTag = Instantiate(namePrefab, transform.position, transform.rotation);
+        nameTag.transform.SetParent(canvas.transform, false);
+        nameTag.text = enemyName;
     }
 
-    
+    private void LateUpdate()
+    {
+        Vector3 position = transform.position;
+       
+        position.y += 1;
+        
+        nameTag.rectTransform.position = position;
+        
+    }
 
     protected void Fire(float direction)
     {
@@ -24,7 +47,7 @@ public class EnemyController : Character
         currentAngles.z += direction;
         newRotation.eulerAngles = currentAngles;
 
-        GameObject projectile = Instantiate(projectilePrefab, transform.position, newRotation);
+        Projectile projectile = Instantiate(projectilePrefab, transform.position, newRotation);
         Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
     }
 
@@ -62,5 +85,17 @@ public class EnemyController : Character
         
         input.x = y;
         input.y = x * -1;
+    }
+
+    public void SetName(string name)
+    {
+        enemyName = name;
+    }
+
+    protected void OnDestroy()
+    {
+        manager.RemoveEnemyFromDictionary(type);
+        manager.AddDeadName(enemyName);
+        Destroy(nameTag.gameObject);
     }
 }
