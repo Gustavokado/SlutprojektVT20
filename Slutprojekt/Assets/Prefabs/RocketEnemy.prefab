@@ -136,11 +136,7 @@ MonoBehaviour:
   health: 10
   healthBar: {fileID: 6653699298703337040, guid: 9009419eed116cd499defd2621c6f126,
     type: 3}
-  projectilePrefab: {fileID: 648937484694899629, guid: eeb2097aea78ca94e9a46d98909a6e8e,
-    type: 3}
-  difficulty: 0
-  enemyName: 
+  projectilePrefab: {fileID: 0}
   timeBetweenFires: 2
-  type: 0
   namePrefab: {fileID: 9078140917758998072, guid: ac2ff33884525884296f7dc51e6ec715,
     type: 3}

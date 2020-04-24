@@ -5,7 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     //mycket av variablerna och metoderna är protected då subklasserna använder mycket av samma saker
-    protected Vector2 input; 
+    protected Vector2 input; //riktningen som karaktären ska röra sig
     [SerializeField]
     protected float speed;
     private float currentDirection;
@@ -18,16 +18,16 @@ public class Character : MonoBehaviour
     [SerializeField]
     protected Projectile projectilePrefab;
 
-    protected virtual void Start() //defenierar en del saker som behövs som rigidbody och healthbar
+    protected virtual void Start() //defenierar en del saker som behövs som rigidbody och dess healthbar
     {
         rb = GetComponent<Rigidbody2D>();
         healthBar = Instantiate(healthBar, transform.position, transform.rotation);
         healthBar.SetHost(this);
     }
        
-    protected void Move(Vector2 movement) //kallas från subklassernas update
+    protected void Move(Vector2 input) //kallas från subklassernas update
     {       
-        rb.velocity = movement * speed;
+        rb.velocity = input * speed;
     }
 
     protected void Rotate(Vector2 target) //roterar karaktären mot en viss punkt (crosshairen/spelaren)
@@ -42,7 +42,7 @@ public class Character : MonoBehaviour
         currentDirection = newDirection;
     }
 
-    public void ReduceHealth(float damage) //kallas när någon projectile träffar en karaktär och tar in dess damage variabel
+    public void ReduceHealth(float damage) //kallas när någon projectile träffar en karaktär och tar in dess damage variabel som parameter
     {
         health -= damage;
         if (health<=0)
@@ -52,7 +52,7 @@ public class Character : MonoBehaviour
         }
     }
 
-    public float GetHealth()
+    public float GetHealth() //används av healthbar scriptet för att health inte ska behöva vara public
     {
         return health;
     }

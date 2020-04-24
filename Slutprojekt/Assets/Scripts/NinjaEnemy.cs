@@ -5,10 +5,10 @@ using UnityEngine;
 public class NinjaEnemy : Enemy
 {
     [SerializeField]
-    float fireAngle;
-    void Update()
+    float fireAngle; //en till variabel behövs för att ninjan ska skjuta sina projectiles på en vinkel som man kan besämma själv
+    void Update() //exakt samma funktionalitet som rocket enemy
     {
-        CalculateInputTowardsPlayer();
+        CalculateInputTowardsPlayer(); 
         if (distanceToPlayer <= 10 && followPlayer)
         {
             followPlayer = false;
@@ -27,7 +27,7 @@ public class NinjaEnemy : Enemy
 
         if (timeSinceLastFire > timeBetweenFires)
         {
-            Fire(fireAngle);
+            Fire(fireAngle); //då ninjan ska skjuta två projectiles åt olika håll kallas fire metoden två gånger, en gång med positiv fireangle och en gång med negativ
             Fire(-fireAngle);
             timeSinceLastFire = 0;
         }

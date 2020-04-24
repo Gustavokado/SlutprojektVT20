@@ -138,10 +138,7 @@ MonoBehaviour:
     type: 3}
   projectilePrefab: {fileID: 4835762682570248005, guid: 06831c1dd0d3d71488cea82664f48e10,
     type: 3}
-  difficulty: 0
-  enemyName: 
   timeBetweenFires: 0.5
-  type: 1
   namePrefab: {fileID: 9078140917758998072, guid: ac2ff33884525884296f7dc51e6ec715,
     type: 3}
   fireAngle: 30

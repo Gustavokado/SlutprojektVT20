@@ -7,7 +7,7 @@ public class Rocket : Projectile
     [SerializeField]
     GameObject explosionPrefab;
   
-    private void Update()
+    private void Update() //samma som beybladen
     {
         IncreaseLifetime();
         Move();
@@ -15,20 +15,20 @@ public class Rocket : Projectile
 
     protected override void Move()
     {
-        speed*=1.1f;
+        speed*=1.1f; //raketen ökar hastighet varje frame innan den rör på sig genom basmetoden
         base.Move();
     }
 
-    protected override void IncreaseLifetime()
+    protected override void IncreaseLifetime() //samma funktionalitet som basmetoden plus att den skapar en explosion om den dör i luften
     {
         base.IncreaseLifetime();
-        if (lifeTime >= maxLifetime)
+        if (lifeTime >= maxLifetime) 
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
         }        
     }
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision) //samma funktionalitet som basmetoden plus att den skapar en explosion om den träffar något som inte är en projectile
     {
         if (collision.gameObject.tag != "Projectile")
         {

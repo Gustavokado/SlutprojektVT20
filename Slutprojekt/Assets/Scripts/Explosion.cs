@@ -20,10 +20,10 @@ public class Explosion : MonoBehaviour
 
             Color color = GetComponent<SpriteRenderer>().color;
 
-            color.a -= transparencySpeed; //hittade den här lösningen nånstans
+            color.a -= transparencySpeed; //hittade den här lösningen nånstans för att gradually göra spriten genomskinlig
             if (color.a<=0)
             {
-                Destroy(this.gameObject);
+                Destroy(this.gameObject); //när den blir helt genomskinlig förstörs den också
             }
             GetComponent<SpriteRenderer>().color = color;
         }
@@ -32,7 +32,7 @@ public class Explosion : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) //när något går in i explosionen (eller är där när den skapas) tar det damage
     {
         Character hitCharacter = collision.GetComponent<Character>();
-        if (hitCharacter!=null)
+        if (hitCharacter!=null) //den försöker bara reducera det den träffars health ifall den faktiskt träffade en karaktär
         {
             hitCharacter.ReduceHealth(damage);
         }       
